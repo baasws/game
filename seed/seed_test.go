@@ -64,6 +64,7 @@ func TestIterable(t *testing.T) {
 	for _, s := range it {
 		if !s.IsValid() {
 			t.Error("found invalid seed")
+			return
 		}
 	}
 }
