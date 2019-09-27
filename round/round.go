@@ -10,9 +10,14 @@ import (
 
 // Round is an array of hands with a winner and won points
 type Round struct {
-	Winner    player.Player
-	Hands     []hand.Hand
-	WonPoints int
+	winner    player.Player
+	hands     []hand.Hand
+	wonPoints int
+}
+
+// New returns an empty Round
+func New() Round {
+	return Round{}
 }
 
 // ComputeWinner and returns the winning Hand
@@ -21,24 +26,24 @@ func (r *Round) ComputeWinner(briscola card.Card) (err error) {
 	var winningBriscola hand.Hand
 	var winningTaiet hand.Hand
 
-	r.WonPoints = 0
+	r.wonPoints = 0
 
-	for _, hand := range r.Hands {
-		handValue := hand.GetCard().Value()
+	for _, hand := range r.hands {
+		handValue := hand.GetCard().Points()
 		fmt.Printf("handValue is %d\n", handValue)
-		r.WonPoints += handValue
-		fmt.Printf("WonPoints is now: %v\n", r.WonPoints)
+		r.wonPoints += handValue
+		fmt.Printf("WonPoints is now: %v\n", r.wonPoints)
 		// briscola check
 		if hand.GetCard().IsBriscola(briscola) {
 			fmt.Println("Hanling with a 'briscola'")
 			// se prima briscola che trovo o se è maggiore il valore della precedente
 			if (winningBriscola.GetPlayer().IsEmpty()) ||
-				(handValue > winningBriscola.GetCard().Value()) {
+				(handValue > winningBriscola.GetCard().Points()) {
 				winningBriscola = hand
 			}
 		} else {
 			if (winningTaiet.GetPlayer().IsEmpty()) ||
-				(handValue > (winningTaiet.GetCard().Value())) {
+				(handValue > (winningTaiet.GetCard().Points())) {
 				winningTaiet = hand
 			}
 		}
@@ -46,16 +51,26 @@ func (r *Round) ComputeWinner(briscola card.Card) (err error) {
 	// abbiamo il vincitore del round
 	if !winningBriscola.GetPlayer().IsEmpty() {
 		// winningBriscola is the winner
-		r.Winner = winningBriscola.GetPlayer()
+		r.winner = winningBriscola.GetPlayer()
 		return
 	}
 	// 2: se non ci sono briscole, si conta solo il valore del GetCardValue()
 	// winningTaiet is the winner
-	r.Winner = winningTaiet.GetPlayer()
+	r.winner = winningTaiet.GetPlayer()
 	return
 }
 
 // AddHand adds and Hand to Hands
 func (r *Round) AddHand(hand hand.Hand) {
-	r.Hands = append(r.Hands, hand)
+	r.hands = append(r.hands, hand)
+}
+
+// GetHands returns []Hands
+func (r Round) GetHands() []hand.Hand {
+	return r.hands
+}
+
+// GetWinner returns the winner
+func (r Round) GetWinner() player.Player {
+	return r.winner
 }

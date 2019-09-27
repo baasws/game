@@ -3,15 +3,16 @@ package decker
 import (
 	"fmt"
 	"testing"
+
+	"github.com/briscola-as-a-service/game/card"
+	"github.com/briscola-as-a-service/game/errs"
+	"github.com/briscola-as-a-service/game/player"
 )
 
-func gimmePlayers(count int) (players []Player) {
-	players = make([]Player, count)
+func gimmePlayers(count int) (players []player.Player) {
+	players = make([]player.Player, count)
 	for i := 0; i < count; i++ {
-		players[i] = Player{
-			Name: fmt.Sprintf("pippo-%d", i),
-			ID:   fmt.Sprintf("ID-%d", i),
-		}
+		players[i] = player.New(fmt.Sprintf("ID-%d", i), fmt.Sprintf("pippo-%d", i))
 	}
 	return
 }
@@ -69,20 +70,20 @@ func TestPlayCard(t *testing.T) {
 	playerCards, _ := dk.NewGame(players)
 
 	// should emit an error if we are playing as the wrong player
-	_, _, _, err := dk.PlayCard(players[1], deck.Card{})
-	if fmt.Sprint(err) != ErrNotYourTurn {
+	_, _, _, err := dk.PlayCard(players[1], card.NewEmpty())
+	if fmt.Sprint(err) != errs.NotYourTurn {
 		t.Error("We are expecting an error here")
 		return
 	}
 
 	// should emit an error if the card is not one the player can play
-	_, _, _, err = dk.PlayCard(players[0], deck.Card{})
-	if fmt.Sprint(err) != ErrCardNotPlayable {
+	_, _, _, err = dk.PlayCard(players[0], card.NewEmpty())
+	if fmt.Sprint(err) != errs.CardNotPlayable {
 		t.Error("We are expecting an error here")
 		return
 	}
 
-	card := playerCards[players[0]].cards[0]
+	card := playerCards[players[0]].Get(0)
 	next, desk, roundEnd, err := dk.PlayCard(players[0], card)
 	if err != nil {
 		t.Error("no error expected")
@@ -94,17 +95,17 @@ func TestPlayCard(t *testing.T) {
 		return
 	}
 
-	if desk[0].Card != card {
+	if !desk[0].GetCard().Equals(card) {
 		t.Error("desk card is different")
 		return
 	}
 
-	if desk[0].Player != players[0] {
+	if !desk[0].GetPlayer().Is(players[0]) {
 		t.Error("desk player is different")
 		return
 	}
 
-	if next != players[1] {
+	if !next.Is(players[1]) {
 		t.Error("next player should be players[1]")
 		return
 	}
@@ -116,7 +117,7 @@ func TestPlayCard(t *testing.T) {
 
 	// trying to move to the next round, should give an error
 	_, _, err = dk.NewRound()
-	if fmt.Sprint(err) != ErrRoundNotEnded {
+	if fmt.Sprint(err) != errs.RoundNotEnded {
 		t.Error("We expect an error here")
 		return
 	}
@@ -124,13 +125,13 @@ func TestPlayCard(t *testing.T) {
 	// play another card as same user, we expect an error if setNextPlayer
 	// correctly did his job
 	_, _, _, err = dk.PlayCard(players[0], card)
-	if fmt.Sprint(err) != ErrNotYourTurn {
+	if fmt.Sprint(err) != errs.NotYourTurn {
 		t.Error("We expect an error")
 		return
 	}
 
 	// closing round
-	card2 := playerCards[players[1]].cards[0]
+	card2 := playerCards[players[1]].Get(0)
 	next, desk, roundEnd, err = dk.PlayCard(players[1], card2)
 	if err != nil {
 		t.Error("No error expected")
@@ -140,7 +141,8 @@ func TestPlayCard(t *testing.T) {
 		t.Error("Invalid desk len")
 		return
 	}
-	if desk[0].Card != card || desk[1].Card != card2 {
+	if !desk[0].GetCard().Equals(card) ||
+		!desk[1].GetCard().Equals(card2) {
 		t.Error("Invalid cards in deck")
 		return
 	}
@@ -157,7 +159,7 @@ func TestPlayCard(t *testing.T) {
 
 	// playing on an ended round should fail
 	_, _, _, err = dk.PlayCard(players[0], card)
-	if fmt.Sprint(err) != ErrRoundEnded {
+	if fmt.Sprint(err) != errs.RoundEnded {
 		t.Error("We expected an error here")
 		return
 	}
@@ -168,7 +170,7 @@ func TestPlayCard(t *testing.T) {
 		t.Error("No error expected here")
 		return
 	}
-	if next == (Player{}) {
+	if next.IsEmpty() {
 		t.Error("next player should be the winner")
 		return
 	}

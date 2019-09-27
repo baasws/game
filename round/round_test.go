@@ -17,12 +17,12 @@ func TestAddHand(t *testing.T) {
 	hand1 := hand.New(player1, card1)
 	r.AddHand(hand1)
 
-	if len(r.Hands) != 1 {
+	if len(r.hands) != 1 {
 		t.Error("Hands len should be 1")
 		return
 	}
 
-	if r.Hands[0] != hand1 {
+	if r.hands[0] != hand1 {
 		t.Error("Hand is wrong")
 		return
 	}
@@ -34,12 +34,12 @@ func TestAddHand(t *testing.T) {
 	hand2 := hand.New(player2, card2)
 	r.AddHand(hand2)
 
-	if len(r.Hands) != 2 {
+	if len(r.hands) != 2 {
 		t.Error("Hands len should be 2")
 		return
 	}
 
-	if r.Hands[0] != hand1 && r.Hands[1] != hand2 {
+	if r.hands[0] != hand1 && r.hands[1] != hand2 {
 		t.Error("Hands are wrong")
 		return
 	}
@@ -64,11 +64,11 @@ func TestComputeWinnerWithLoad(t *testing.T) {
 	r.AddHand(hand2)
 	r.ComputeWinner(briscola)
 	// the winner should be player 1
-	if r.Winner != player1 {
+	if r.winner != player1 {
 		t.Error("Winner should be player1")
 		return
 	}
-	if r.WonPoints != 14 {
+	if r.wonPoints != 14 {
 		t.Error("WonPoints should be 14")
 		return
 	}
@@ -77,11 +77,11 @@ func TestComputeWinnerWithLoad(t *testing.T) {
 	briscola = card.New(seed.Spade(), 1)
 	r.ComputeWinner(briscola)
 	// the winner should be player 1
-	if r.Winner != player1 {
+	if r.winner != player1 {
 		t.Error("Winner should be player1")
 		return
 	}
-	if r.WonPoints != 14 {
+	if r.wonPoints != 14 {
 		t.Error("WonPoints should be 14")
 		return
 	}
@@ -94,7 +94,7 @@ func TestComputeWinnerWithLoad(t *testing.T) {
 	r.AddHand(hand1)
 	r.ComputeWinner(briscola)
 
-	if !hand1.GetPlayer().Is(r.Winner) {
+	if !hand1.GetPlayer().Is(r.winner) {
 		t.Error("Wrong winner")
 		return
 	}
@@ -103,7 +103,7 @@ func TestComputeWinnerWithLoad(t *testing.T) {
 	briscola = card.New(seed.Spade(), 1)
 	r.ComputeWinner(briscola)
 
-	if !hand1.GetPlayer().Is(r.Winner) {
+	if !hand1.GetPlayer().Is(r.winner) {
 		t.Error("Wrong winner")
 		return
 	}
@@ -127,11 +127,11 @@ func TestComputeWinnerWithoutLoad(t *testing.T) {
 	r.AddHand(hand2)
 	r.ComputeWinner(briscola)
 	// the winner should be player 1
-	if !player1.Is(r.Winner) {
+	if !player1.Is(r.winner) {
 		t.Error("Winner should be player1")
 		return
 	}
-	if r.WonPoints != 0 {
+	if r.wonPoints != 0 {
 		t.Error("WonPoints should be 0")
 		return
 	}
@@ -140,11 +140,11 @@ func TestComputeWinnerWithoutLoad(t *testing.T) {
 	briscola = card.New(seed.Bastoni(), 1)
 	r.ComputeWinner(briscola)
 	// the winner should be player 1
-	if r.Winner != player1 {
+	if r.winner != player1 {
 		t.Error("Winner should be player1")
 		return
 	}
-	if r.WonPoints != 0 {
+	if r.wonPoints != 0 {
 		t.Error("WonPoints should be 0")
 		return
 	}
@@ -157,7 +157,7 @@ func TestComputeWinnerWithoutLoad(t *testing.T) {
 	r.AddHand(hand1)
 	r.ComputeWinner(briscola)
 
-	if !hand1.GetPlayer().Is(r.Winner) {
+	if !hand1.GetPlayer().Is(r.winner) {
 		t.Error("Wrong winner")
 		return
 	}
@@ -166,7 +166,7 @@ func TestComputeWinnerWithoutLoad(t *testing.T) {
 	briscola = card.New(seed.Spade(), 1)
 	r.ComputeWinner(briscola)
 
-	if !hand2.GetPlayer().Is(r.Winner) {
+	if !hand2.GetPlayer().Is(r.winner) {
 		t.Error("Wrong winner")
 		return
 	}
@@ -175,7 +175,7 @@ func TestComputeWinnerWithoutLoad(t *testing.T) {
 	briscola = hand1.GetCard()
 	r.ComputeWinner(briscola)
 
-	if !hand1.GetPlayer().Is(r.Winner) {
+	if !hand1.GetPlayer().Is(r.winner) {
 		t.Error("Wrong winner")
 		return
 	}
@@ -184,7 +184,7 @@ func TestComputeWinnerWithoutLoad(t *testing.T) {
 	briscola = hand2.GetCard()
 	r.ComputeWinner(briscola)
 
-	if !hand2.GetPlayer().Is(r.Winner) {
+	if !hand2.GetPlayer().Is(r.winner) {
 		t.Error("Wrong winner")
 		return
 	}

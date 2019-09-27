@@ -4,43 +4,8 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/briscola-as-a-service/game/card"
 	"github.com/briscola-as-a-service/game/seed"
 )
-
-func TestGetCardPoints(t *testing.T) {
-	zeroes := []int{2, 4, 5, 6, 7}
-	nonZeroes := []int{1, 3, 8, 9, 10}
-	// with this, we check consistency with points const in `const.go` file
-	nonZeroValues := map[int]int{
-		1:  11,
-		3:  10,
-		8:  2,
-		9:  3,
-		10: 4,
-	}
-
-	// zero values
-	for _, zero := range zeroes {
-		tmpCard := card.New(seed.Random(), zero)
-		points := tmpCard.Value()
-		if points != 0 {
-			t.Error("Points should be == 0")
-			return
-		}
-	}
-
-	// others values
-	for _, nonZero := range nonZeroes {
-		tmpCard := card.New(seed.Random(), nonZero)
-		points := tmpCard.Value()
-		if points != nonZeroValues[nonZero] {
-			t.Errorf("Points should be == %v and not %v",
-				nonZeroValues[nonZero], points)
-			return
-		}
-	}
-}
 
 func TestPick1(t *testing.T) {
 	var d Deck
@@ -52,8 +17,6 @@ func TestPick1(t *testing.T) {
 		return
 	}
 
-	// - shuffle then check the deck
-	d.Shuffle()
 	// 	 	- cards array:
 	expectedDeckSize := cardsPerSeed * len(seed.Iterable())
 	if len(d.cards) != expectedDeckSize {
@@ -79,9 +42,7 @@ func TestPick1(t *testing.T) {
 }
 
 func TestPick2(t *testing.T) {
-	var d Deck
-	d.Shuffle()
-
+	d := New()
 	availableCardsLenBeforePick := len(d.availableCards)
 
 	card, err := d.Pick()
@@ -91,7 +52,7 @@ func TestPick2(t *testing.T) {
 	}
 	cardValue := card.Value()
 	if cardValue < 1 || cardValue > cardsPerSeed {
-		t.Error("Invalid card.Value")
+		t.Errorf("Invalid card.Value: %v\n", cardValue)
 		return
 	}
 
@@ -130,8 +91,7 @@ func TestPick2(t *testing.T) {
 }
 
 func TestPick3(t *testing.T) {
-	var d Deck
-	d.Shuffle()
+	d := New()
 
 	deckSize := len(seed.Iterable()) * cardsPerSeed
 
@@ -160,8 +120,7 @@ func TestPick3(t *testing.T) {
 
 // we should not be able to Drop a deck after a Pick
 func TestDrop1(t *testing.T) {
-	var d Deck
-	d.Shuffle()
+	d := New()
 	d.Pick()
 
 	err := d.Drop()
@@ -174,8 +133,7 @@ func TestDrop1(t *testing.T) {
 // we now should be able to drop a card
 // That card should be the `expendable` one.
 func TestDrop2(t *testing.T) {
-	var d Deck
-	d.Shuffle()
+	d := New()
 	err := d.Drop()
 	if err != nil {
 		t.Error("We are not expecing an error here")

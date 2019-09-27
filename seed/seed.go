@@ -49,6 +49,11 @@ func Iterable() []Seed {
 	}
 }
 
+// IsValid checks if seed is valid
+func (s Seed) IsValid() bool {
+	return s.IsSpade() || s.IsDenari() || s.IsCoppe() || s.IsBastoni()
+}
+
 // IsSpade returns true if seed is SeedSpade
 func (s Seed) IsSpade() bool {
 	return s.seed == seedSpade

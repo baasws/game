@@ -19,14 +19,15 @@ type Deck struct {
 
 const cardsPerSeed = 10
 
-// Shuffle the deck. Shuffling will reset the game
-func (d *Deck) Shuffle() {
+// New deck. Shuffling will reset the game
+func New() (d Deck) {
 	d.init()
 	rand.Seed(time.Now().UnixNano())
 	rand.Shuffle(len(d.availableCards), func(i, j int) {
 		d.availableCards[i], d.availableCards[j] =
 			d.availableCards[j], d.availableCards[i]
 	})
+	return
 }
 
 // Pick a card from deck

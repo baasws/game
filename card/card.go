@@ -32,9 +32,14 @@ func (c Card) IsBriscola(briscola Card) bool {
 	return c.seed == briscola.seed
 }
 
-// Value returns the value points of a card
-func (c Card) Value() int {
+// Points returns the points of a card
+func (c Card) Points() int {
 	return cardPoints[c.value]
+}
+
+// Value returns the card value
+func (c Card) Value() int {
+	return c.value
 }
 
 // IsExpendable returns true if the card is expendable
