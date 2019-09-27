@@ -59,6 +59,11 @@ func TestNewGame2(t *testing.T) {
 		t.Errorf("nextPlayer should be %v", players[0])
 		return
 	}
+
+	if !dk.briscola.Equals(dk.GetBriscola()) {
+		t.Error("Wrong briscola got by GetBriscola()")
+		return
+	}
 }
 
 func TestPlayCard(t *testing.T) {
