@@ -8,14 +8,7 @@ import (
 )
 
 func TestPick1(t *testing.T) {
-	var d Deck
-
-	// - this should fail. We must shuffle the deck, first
-	_, err := d.Pick()
-	if err == nil {
-		t.Error("We should not be able to Pick on a non shuffled deck")
-		return
-	}
+	d := New()
 
 	// 	 	- cards array:
 	expectedDeckSize := cardsPerSeed * len(seed.Iterable())

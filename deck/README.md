@@ -1,22 +1,12 @@
 # Deck
 
-[![Build Status](https://travis-ci.org/briscola-as-a-service/deck.svg?branch=master)](https://travis-ci.org/briscola-as-a-service/deck)
-[![Coverage Status](https://coveralls.io/repos/github/briscola-as-a-service/deck/badge.svg?branch=master)](https://coveralls.io/github/briscola-as-a-service/deck?branch=master)
-[![Go Report Card](https://goreportcard.com/badge/github.com/briscola-as-a-service/deck)](https://goreportcard.com/report/github.com/briscola-as-a-service/deck)
-[![GoDoc](https://godoc.org/github.com/briscola-as-a-service/deck?status.svg)](https://godoc.org/github.com/briscola-as-a-service/deck)
-
-> Please append `[ci skip]` to commit message, if test execution is not required
-
 ## Usage
 
 ### 1, 2, 3.. start
 
 ```go
 // declare a Deck
-var d Deck
-
-// you must Shuffle a new deck, huh?
-d.Shuffle()
+d := deck.New()
 
 // you Pick a card, like a pillow
 card, err := d.Pick()
@@ -26,10 +16,7 @@ card, err := d.Pick()
 
 ```go
 // get card points
-points := d.GetCardPoints(Card{
-  Value: 3,
-  Semen: "spade",
-})
+// TODO:
 // points = 10
 ```
 

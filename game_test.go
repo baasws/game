@@ -1,4 +1,4 @@
-package decker
+package game
 
 import (
 	"fmt"
@@ -18,9 +18,8 @@ func gimmePlayers(count int) (players []player.Player) {
 }
 
 func TestNewGame1(t *testing.T) {
-	var dk Decker
 	players := gimmePlayers(2)
-	dk.NewGame(players)
+	dk := New(players)
 
 	for _, pc := range dk.playerCards {
 		if pc.Len() != 3 {
@@ -32,9 +31,8 @@ func TestNewGame1(t *testing.T) {
 }
 
 func TestNewGame2ThreePlayers(t *testing.T) {
-	var dk Decker
 	players := gimmePlayers(3)
-	dk.NewGame(players)
+	dk := New(players)
 
 	for _, pc := range dk.playerCards {
 		if pc.Len() != 3 {
@@ -46,9 +44,8 @@ func TestNewGame2ThreePlayers(t *testing.T) {
 }
 
 func TestNewGame2(t *testing.T) {
-	var dk Decker
 	players := gimmePlayers(2)
-	dk.NewGame(players)
+	dk := New(players)
 
 	for i, p := range players {
 		if dk.players[i] != p {
@@ -65,9 +62,9 @@ func TestNewGame2(t *testing.T) {
 }
 
 func TestPlayCard(t *testing.T) {
-	var dk Decker
 	players := gimmePlayers(2)
-	playerCards, _ := dk.NewGame(players)
+	dk := New(players)
+	playerCards := dk.GetPlayerCards(players[0])
 
 	// should emit an error if we are playing as the wrong player
 	_, _, _, err := dk.PlayCard(players[1], card.NewEmpty())
@@ -83,7 +80,7 @@ func TestPlayCard(t *testing.T) {
 		return
 	}
 
-	card := playerCards[players[0]].Get(0)
+	card := playerCards.Get(0)
 	next, desk, roundEnd, err := dk.PlayCard(players[0], card)
 	if err != nil {
 		t.Error("no error expected")
@@ -131,7 +128,7 @@ func TestPlayCard(t *testing.T) {
 	}
 
 	// closing round
-	card2 := playerCards[players[1]].Get(0)
+	card2 := dk.GetPlayerCards(players[1]).Get(0)
 	next, desk, roundEnd, err = dk.PlayCard(players[1], card2)
 	if err != nil {
 		t.Error("No error expected")

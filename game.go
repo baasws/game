@@ -1,4 +1,4 @@
-package decker
+package game
 
 import (
 	"errors"
@@ -23,11 +23,12 @@ type Decker struct {
 	deck         deck.Deck
 }
 
-// NewGame starts a new game
-func (dk *Decker) NewGame(players []player.Player) (
-	playerCards map[player.Player]*player.Cards,
-	briscola card.Card,
-) {
+// New starts a new game
+// (
+// 	  playerCards map[player.Player]*player.Cards,
+//  	briscola card.Card,
+// )
+func New(players []player.Player) (dk Decker) {
 	//
 	fmt.Println("starting..")
 	dk.deck = deck.New()
@@ -58,9 +59,17 @@ func (dk *Decker) NewGame(players []player.Player) (
 	}
 
 	// finally
-	briscola = dk.briscola
-	playerCards = dk.playerCards
 	return
+}
+
+// GetBriscola returns the briscola
+func (dk Decker) GetBriscola() card.Card {
+	return dk.briscola
+}
+
+// GetPlayerCards returns the player cards
+func (dk Decker) GetPlayerCards(player player.Player) *player.Cards {
+	return dk.playerCards[player]
 }
 
 // PlayCard a player plays a card
