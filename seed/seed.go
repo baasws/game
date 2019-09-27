@@ -1,5 +1,10 @@
 package seed
 
+import (
+	"math/rand"
+	"time"
+)
+
 // Seed type
 type Seed struct {
 	seed string
@@ -15,8 +20,9 @@ const (
 
 // Random returns a random Seed
 func Random() Seed {
-	// todo randomize
-	return Seed{seedSpade}
+	rand.Seed(time.Now().UnixNano())
+	it := Iterable()
+	return it[rand.Intn(len(it))]
 }
 
 // Denari returns a Denari

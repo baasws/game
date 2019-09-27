@@ -27,11 +27,6 @@ func TestPick1(t *testing.T) {
 		t.Error("availableCards array should have `expectedDeckSize` elements")
 		return
 	}
-	// after the Shuffle, the deck should be ready
-	if !d.ready {
-		t.Error("Deck should be ready")
-		return
-	}
 }
 
 func TestPick2(t *testing.T) {
@@ -130,6 +125,13 @@ func TestDrop2(t *testing.T) {
 	err := d.Drop()
 	if err != nil {
 		t.Error("We are not expecing an error here")
+		return
+	}
+
+	// we should not be able to drop again
+	err = d.Drop()
+	if err == nil {
+		t.Error("Expecing an error here")
 		return
 	}
 

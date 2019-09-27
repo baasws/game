@@ -31,6 +31,7 @@ func TestAddLenDrop(t *testing.T) {
 
 	if pc.Len() != 1 {
 		t.Error("Len() should returns 1, before drop")
+		return
 	}
 
 	err = pc.Drop(c2)
@@ -41,12 +42,18 @@ func TestAddLenDrop(t *testing.T) {
 
 	if pc.Len() != 1 {
 		t.Error("Len() should returns 1, after an invalid drop")
+		return
 	}
 
 	pc.Add(c2)
 
 	if pc.Len() != 2 {
 		t.Error("Len() should returns 2, before drop")
+		return
+	}
+	if !pc.Get(1).Equals(c2) {
+		t.Error("card 1 should be c2")
+		return
 	}
 
 	err = pc.Drop(c2)
@@ -57,7 +64,6 @@ func TestAddLenDrop(t *testing.T) {
 
 	if pc.Len() != 1 {
 		t.Error("Len() should returns 1, after a valid drop")
+		return
 	}
 }
-
-func TestDrop(t *testing.T) {}

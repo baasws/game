@@ -6,7 +6,22 @@ import (
 )
 
 func TestRandom(t *testing.T) {
-	// todo
+	count := 10
+	var randoms []Seed
+	for i := 0; i < count; i++ {
+		randoms = append(randoms, Random())
+	}
+
+	atLeastOneDiffers := false
+	for i := 0; i < count-1; i++ {
+		if randoms[i] != randoms[i+1] {
+			atLeastOneDiffers = true
+		}
+	}
+	if !atLeastOneDiffers {
+		t.Error("We expect a random here")
+		return
+	}
 }
 
 func TestSeeds(t *testing.T) {

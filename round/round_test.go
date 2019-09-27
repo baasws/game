@@ -9,8 +9,24 @@ import (
 	"github.com/briscola-as-a-service/game/seed"
 )
 
+func TestNew(t *testing.T) {
+	r := New()
+	if !r.winner.IsEmpty() {
+		t.Error("winner should be an empty Player")
+		return
+	}
+	if len(r.hands) != 0 {
+		t.Error("hands should be an empty array")
+		return
+	}
+	if r.wonPoints != 0 {
+		t.Error("wonPoints should be zeroed")
+		return
+	}
+}
+
 func TestAddHand(t *testing.T) {
-	r := Round{}
+	r := New()
 
 	player1 := player.New("P1", "Player1")
 	card1 := card.New(seed.Denari(), 3)
@@ -24,6 +40,11 @@ func TestAddHand(t *testing.T) {
 
 	if r.hands[0] != hand1 {
 		t.Error("Hand is wrong")
+		return
+	}
+
+	if r.GetHands()[0] != r.hands[0] {
+		t.Error("hands should be equal to GetHands()")
 		return
 	}
 
@@ -41,6 +62,11 @@ func TestAddHand(t *testing.T) {
 
 	if r.hands[0] != hand1 && r.hands[1] != hand2 {
 		t.Error("Hands are wrong")
+		return
+	}
+
+	if r.GetHands()[0] != r.hands[0] || r.GetHands()[1] != r.hands[1] {
+		t.Error("hands should be equal to GetHands()")
 		return
 	}
 
@@ -96,6 +122,11 @@ func TestComputeWinnerWithLoad(t *testing.T) {
 
 	if !hand1.GetPlayer().Is(r.winner) {
 		t.Error("Wrong winner")
+		return
+	}
+
+	if !r.winner.Is(r.GetWinner()) {
+		t.Error("Wrong winner got by GetWinner")
 		return
 	}
 

@@ -2,6 +2,7 @@ package deck
 
 import (
 	"errors"
+	"fmt"
 	"math/rand"
 	"time"
 
@@ -14,7 +15,6 @@ type Deck struct {
 	cards          []card.Card
 	availableCards []card.Card
 	passedCards    []card.Card
-	ready          bool
 }
 
 const cardsPerSeed = 10
@@ -32,9 +32,6 @@ func New() (d Deck) {
 
 // Pick a card from deck
 func (d *Deck) Pick() (c card.Card, err error) {
-	if !d.ready {
-		return card.NewEmpty(), errors.New("Deck not shuffled. Shuffle first")
-	}
 	if len(d.availableCards) == 0 {
 		return card.NewEmpty(), errors.New("No more cards in the deck")
 	}
@@ -56,17 +53,14 @@ func (d *Deck) burn(index int) {
 // Drop a card only before the first Pick. Think of three players game
 func (d *Deck) Drop() error {
 	if len(d.availableCards) != len(d.cards) {
+		fmt.Println("a card has already been dropped or played")
 		return errors.New("Someone already picked a card")
 	}
-	dropped := false
 	for index, card := range d.availableCards {
 		if card.IsExpendable() {
-			dropped = true
+			fmt.Printf("dropping %dth card\n", index)
 			d.burn(index)
 		}
-	}
-	if !dropped {
-		return errors.New("Expendable card not dropped")
 	}
 	return nil
 }
@@ -85,5 +79,4 @@ func (d *Deck) init() {
 			d.availableCards = append(d.availableCards, card)
 		}
 	}
-	d.ready = true
 }
