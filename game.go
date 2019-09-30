@@ -138,7 +138,6 @@ func (dk *Decker) NewRound() (
 	dk.currentRound = round.New()
 
 	// pick card for players
-
 	return
 }
 
