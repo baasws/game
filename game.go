@@ -83,7 +83,7 @@ func (dk *Decker) PlayCard(player player.Player, card card.Card) (
 	// checking if round is terminated
 	if dk.isRoundEnded() {
 		err = errors.New(errs.RoundEnded)
-		fmt.Println("round terminated. Please call NextRound()")
+		fmt.Println("round terminated. Please call NewRound()")
 		return
 	}
 
@@ -138,6 +138,46 @@ func (dk *Decker) NewRound() (
 	dk.currentRound = round.New()
 
 	// pick card for players
+	dk.pickCardsForPlayers()
+	// fmt.Printf("Players cards: %v\n", dk.playerCards)
+	return
+}
+
+func (dk *Decker) pickCardsForPlayers() {
+	fmt.Println("picking cards for players")
+	// starting from dk.nextPlayer pick a card
+	for _, p := range dk.GetSortedPlayers() {
+		fmt.Printf("picking a card for player: %v\n", p)
+		card, err := dk.deck.Pick()
+		if err != nil {
+			fmt.Println("no more cards in deck")
+		} else {
+			fmt.Printf("Picked %v\n", card)
+			dk.playerCards[p].Add(card)
+		}
+	}
+}
+
+// GetSortedPlayers gives an iterable with sorted players starting by nextPlayer
+func (dk Decker) GetSortedPlayers() (ret []player.Player) {
+	found := false
+	toAppend := []player.Player{}
+	for _, p := range dk.players {
+		if p.Is(dk.nextPlayer) {
+			found = true
+		}
+		if found {
+			ret = append(ret, p)
+		} else {
+			toAppend = append(toAppend, p)
+		}
+	}
+	// appending other players
+	if len(toAppend) > 0 {
+		for _, p := range toAppend {
+			ret = append(ret, p)
+		}
+	}
 	return
 }
 
