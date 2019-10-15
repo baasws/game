@@ -23,6 +23,15 @@ func TestIsEmpty(t *testing.T) {
 	}
 }
 
+func TestID(t *testing.T) {
+	id := "id-1234-12341-123"
+	p := New(id, "name")
+	if p.ID() != id {
+		t.Error("wrong ID returned from ID()")
+		return
+	}
+}
+
 func TestIs(t *testing.T) {
 	p1 := New("id", "name")
 	p2 := New("id", "name2")

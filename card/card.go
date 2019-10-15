@@ -1,6 +1,9 @@
 package card
 
-import "github.com/briscola-as-a-service/game/seed"
+import (
+	"github.com/briscola-as-a-service/game/seed"
+	"github.com/labstack/gommon/log"
+)
 
 // Card type
 type Card struct {
@@ -10,6 +13,14 @@ type Card struct {
 
 // New returns a Card
 func New(seed seed.Seed, value int) Card {
+	if value < 1 || value > 10 {
+		log.Error("invalid value for card")
+		return Card{}
+	}
+	if !seed.IsValid() {
+		log.Error("invalid seed")
+		return Card{}
+	}
 	// check seed validity
 	return Card{
 		seed,
@@ -40,6 +51,11 @@ func (c Card) Points() int {
 // Value returns the card value
 func (c Card) Value() int {
 	return c.value
+}
+
+// Seed returns the card seed
+func (c Card) Seed() seed.Seed {
+	return c.seed
 }
 
 // IsExpendable returns true if the card is expendable

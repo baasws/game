@@ -10,5 +10,5 @@
 ## test
 
 ```bash
-go test -cover ./...
+go test -cover -count=1 ./...
 ```

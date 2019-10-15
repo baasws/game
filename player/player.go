@@ -23,3 +23,8 @@ func (p Player) IsEmpty() bool {
 func (p Player) Is(who Player) bool {
 	return p.id == who.id
 }
+
+// ID returns the current sd
+func (p Player) ID() string {
+	return p.id
+}

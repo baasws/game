@@ -74,3 +74,25 @@ func (r Round) GetHands() []hand.Hand {
 func (r Round) GetWinner() player.Player {
 	return r.winner
 }
+
+// IsPassed returns true if a Card is played
+func (r Round) IsPassed(crd card.Card) bool {
+	for i, h := range r.hands {
+		if h.GetCard().Equals(crd) {
+			fmt.Printf("Card %v found in Hand #%d\n", crd, i)
+			return true
+		}
+	}
+	return false
+}
+
+// HasABriscola returns true if a briscola has played in this round
+func (r Round) HasABriscola(briscola card.Card) bool {
+	for i, h := range r.hands {
+		if h.GetCard().IsBriscola(briscola) {
+			fmt.Printf("Found a briscola at #%d hand\n", i)
+			return true
+		}
+	}
+	return false
+}
