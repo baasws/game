@@ -24,7 +24,7 @@ func (p Player) Is(who Player) bool {
 	return p.id == who.id
 }
 
-// ID returns the current sd
+// ID returns the current id
 func (p Player) ID() string {
 	return p.id
 }
