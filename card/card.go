@@ -38,6 +38,12 @@ func (c Card) Equals(card Card) bool {
 	return c.seed == card.seed && c.value == card.value
 }
 
+// IsGreatherThan return true if Points() of the first card are greather than
+// the given card.
+func (c Card) IsGreatherThan(card Card) bool {
+	return c.Points() > card.Points()
+}
+
 // IsBriscola returns true if card has the same seed of the one passed
 func (c Card) IsBriscola(briscola Card) bool {
 	return c.seed == briscola.seed

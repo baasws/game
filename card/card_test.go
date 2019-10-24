@@ -121,3 +121,35 @@ func TestIsExpendable(t *testing.T) {
 		return
 	}
 }
+
+func TestIsGreatherThan(t *testing.T) {
+	c1 := New(seed.Denari(), 2)
+	c2 := New(seed.Spade(), 3)
+	c3 := New(seed.Coppe(), 10)
+	c4 := New(seed.Coppe(), 1)
+
+	if c1.IsGreatherThan(c2) {
+		t.Error("c1 is not greather than c2")
+		return
+	}
+
+	if !c2.IsGreatherThan(c1) {
+		t.Error("c2 is greather than c1")
+		return
+	}
+
+	if c3.IsGreatherThan(c2) {
+		t.Error("c3 is not grather than c2")
+		return
+	}
+
+	if !c4.IsGreatherThan(c3) {
+		t.Error("c4 is not greather than c3")
+		return
+	}
+
+	if c1.IsGreatherThan(c4) {
+		t.Error("c1 is not greather than c4")
+		return
+	}
+}
