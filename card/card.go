@@ -44,6 +44,11 @@ func (c Card) IsGreatherThan(card Card) bool {
 	return c.Points() > card.Points()
 }
 
+// IsValid return true if the card is valid
+func (c Card) IsValid() bool {
+	return c.value > 0 && c.value < 11 && c.seed.IsValid()
+}
+
 // IsBriscola returns true if card has the same seed of the one passed
 func (c Card) IsBriscola(briscola Card) bool {
 	return c.seed == briscola.seed

@@ -46,6 +46,23 @@ func TestEquals(t *testing.T) {
 	}
 }
 
+func TestIsValid(t *testing.T) {
+	c1 := New(seed.Bastoni(), 2)
+	c2 := New(seed.Bastoni(), 0)
+	c3 := New(seed.Bastoni(), 11)
+	c4 := New(seed.Seed{}, 8)
+
+	if !c1.IsValid() {
+		t.Error("Expected c1 is valid")
+		return
+	}
+
+	if c2.IsValid() || c3.IsValid() || c4.IsValid() {
+		t.Error("c2 and c3 are not valid")
+		return
+	}
+}
+
 func TestIsBriscola(t *testing.T) {
 	c1 := New(seed.Bastoni(), 2)
 	c2 := New(seed.Denari(), 4)
@@ -150,6 +167,15 @@ func TestIsGreatherThan(t *testing.T) {
 
 	if c1.IsGreatherThan(c4) {
 		t.Error("c1 is not greather than c4")
+		return
+	}
+}
+
+func TestSeed(t *testing.T) {
+	seed := seed.Bastoni()
+	c1 := New(seed, 8)
+	if c1.Seed() != seed {
+		t.Error("seed should be equal")
 		return
 	}
 }
