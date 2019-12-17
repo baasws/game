@@ -79,3 +79,17 @@ func (s Seed) IsBastoni() bool {
 func (s Seed) IsCoppe() bool {
 	return s.seed == seedCoppe
 }
+
+func (s Seed) String() string {
+	switch true {
+	case s.IsCoppe():
+		return "C"
+	case s.IsSpade():
+		return "S"
+	case s.IsDenari():
+		return "D"
+	case s.IsBastoni():
+		return "B"
+	}
+	return "ERR!"
+}

@@ -89,3 +89,22 @@ func TestIsValid(t *testing.T) {
 		return
 	}
 }
+
+func TestString(t *testing.T) {
+	if fmt.Sprintf("%s", Denari()) != "D" {
+		t.Error("invalid for Denari()")
+		return
+	}
+	if fmt.Sprintf("%s", Coppe()) != "C" {
+		t.Error("invalid for Coppe()")
+		return
+	}
+	if fmt.Sprintf("%s", Spade()) != "S" {
+		t.Error("invalid for Spade()")
+		return
+	}
+	if fmt.Sprintf("%s", Bastoni()) != "B" {
+		t.Error("invalid for Bastoni()")
+		return
+	}
+}

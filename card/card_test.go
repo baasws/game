@@ -1,6 +1,7 @@
 package card
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/briscola-as-a-service/game/seed"
@@ -177,5 +178,24 @@ func TestSeed(t *testing.T) {
 	if c1.Seed() != seed {
 		t.Error("seed should be equal")
 		return
+	}
+}
+
+func TestString(t *testing.T) {
+	for i := 1; i < 10; i++ {
+		var cards []Card
+		cards = append(cards, New(seed.Denari(), i))
+		cards = append(cards, New(seed.Coppe(), i))
+		cards = append(cards, New(seed.Spade(), i))
+		cards = append(cards, New(seed.Bastoni(), i))
+		//
+		for _, card := range cards {
+			a := fmt.Sprintf("%s", card)
+			b := fmt.Sprintf("%s%d", card.Seed(), i)
+			if a != b {
+				t.Errorf("%s != %s :(", a, b)
+				return
+			}
+		}
 	}
 }

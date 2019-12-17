@@ -1,6 +1,8 @@
 package card
 
 import (
+	"fmt"
+
 	"github.com/briscola-as-a-service/game/seed"
 	"github.com/labstack/gommon/log"
 )
@@ -72,4 +74,8 @@ func (c Card) Seed() seed.Seed {
 // IsExpendable returns true if the card is expendable
 func (c Card) IsExpendable() bool {
 	return c.seed.IsSpade() && c.value == 2
+}
+
+func (c Card) String() string {
+	return fmt.Sprintf("%s%d", c.seed, c.value)
 }
