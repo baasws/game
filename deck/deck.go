@@ -6,8 +6,8 @@ import (
 	"math/rand"
 	"time"
 
-	"github.com/briscola-as-a-service/game/card"
-	"github.com/briscola-as-a-service/game/seed"
+	"github.com/baasws/game/card"
+	"github.com/baasws/game/seed"
 )
 
 // Deck struct

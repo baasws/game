@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/briscola-as-a-service/game/seed"
+	"github.com/baasws/game/seed"
 )
 
 func TestNew(t *testing.T) {

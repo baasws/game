@@ -1,8 +1,8 @@
 package hand
 
 import (
-	"github.com/briscola-as-a-service/game/card"
-	"github.com/briscola-as-a-service/game/player"
+	"github.com/baasws/game/card"
+	"github.com/baasws/game/player"
 )
 
 // Hand is a Player that played a Card

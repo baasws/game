@@ -3,7 +3,7 @@ package card
 import (
 	"fmt"
 
-	"github.com/briscola-as-a-service/game/seed"
+	"github.com/baasws/game/seed"
 	"github.com/labstack/gommon/log"
 )
 

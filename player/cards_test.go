@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/briscola-as-a-service/game/card"
-	"github.com/briscola-as-a-service/game/errs"
-	"github.com/briscola-as-a-service/game/seed"
+	"github.com/baasws/game/card"
+	"github.com/baasws/game/errs"
+	"github.com/baasws/game/seed"
 )
 
 func TestAddLenDrop(t *testing.T) {

@@ -3,10 +3,10 @@ package round
 import (
 	"testing"
 
-	"github.com/briscola-as-a-service/game/card"
-	"github.com/briscola-as-a-service/game/hand"
-	"github.com/briscola-as-a-service/game/player"
-	"github.com/briscola-as-a-service/game/seed"
+	"github.com/baasws/game/card"
+	"github.com/baasws/game/hand"
+	"github.com/baasws/game/player"
+	"github.com/baasws/game/seed"
 )
 
 func TestNew(t *testing.T) {

@@ -3,8 +3,8 @@ package player
 import (
 	"errors"
 
-	"github.com/briscola-as-a-service/game/card"
-	"github.com/briscola-as-a-service/game/errs"
+	"github.com/baasws/game/card"
+	"github.com/baasws/game/errs"
 )
 
 // Cards matains the card a Player have in hands

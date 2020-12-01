@@ -4,12 +4,12 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/briscola-as-a-service/game/card"
-	"github.com/briscola-as-a-service/game/deck"
-	"github.com/briscola-as-a-service/game/errs"
-	"github.com/briscola-as-a-service/game/hand"
-	"github.com/briscola-as-a-service/game/player"
-	"github.com/briscola-as-a-service/game/round"
+	"github.com/baasws/game/card"
+	"github.com/baasws/game/deck"
+	"github.com/baasws/game/errs"
+	"github.com/baasws/game/hand"
+	"github.com/baasws/game/player"
+	"github.com/baasws/game/round"
 )
 
 // Decker is the Deck handler

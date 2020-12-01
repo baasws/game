@@ -3,9 +3,9 @@ package round
 import (
 	"fmt"
 
-	"github.com/briscola-as-a-service/game/card"
-	"github.com/briscola-as-a-service/game/hand"
-	"github.com/briscola-as-a-service/game/player"
+	"github.com/baasws/game/card"
+	"github.com/baasws/game/hand"
+	"github.com/baasws/game/player"
 )
 
 // Round is an array of hands with a winner and won points
