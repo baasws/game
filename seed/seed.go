@@ -88,8 +88,7 @@ func (s Seed) String() string {
 		return "S"
 	case s.IsDenari():
 		return "D"
-	case s.IsBastoni():
-		return "B"
 	}
-	return "ERR!"
+	// case s.IsBastoni(): || default:
+	return "B"
 }
