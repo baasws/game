@@ -221,3 +221,37 @@ func TestComputeWinnerWithoutLoad(t *testing.T) {
 	}
 	return
 }
+
+func TestIsPassed(t *testing.T) {
+	r := New()
+
+	p := player.New("1", "foo")
+	c := card.New(seed.Bastoni(), 4)
+	r.AddHand(hand.New(p, c))
+
+	if !r.IsPassed(c) {
+		t.Error("Card should be signed as 'passed'")
+		return
+	}
+
+	if r.IsPassed(card.New(seed.Coppe(), 4)) {
+		t.Error("Card should not be signed as 'passed'")
+	}
+}
+
+func TestHasABriscsola(t *testing.T) {
+	r := New()
+
+	p := player.New("1", "foo")
+	c := card.New(seed.Bastoni(), 4)
+	r.AddHand(hand.New(p, c))
+
+	if !r.HasABriscola(card.New(seed.Bastoni(), 5)) {
+		t.Error("Should return true if a Briscola was played")
+		return
+	}
+
+	if r.HasABriscola(card.New(seed.Coppe(), 4)) {
+		t.Error("Should return false if the card is not a briscola")
+	}
+}
